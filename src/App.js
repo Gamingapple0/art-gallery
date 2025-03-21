@@ -1,24 +1,43 @@
 import logo from './logo.svg';
 import './App.css';
+import React from 'react';
+
+import Navbar from './components/Navbar';
+import Signin from './components/Signin';
+
+import { auth } from './config/firebase';
+
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation
+} from 'react-router-dom';
 
 function App() {
+  const [location, setLocation] = React.useState('');
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      {/* Render Navbar only if the current path isn't '/' */}
+      {location !== '/' && <Navbar />}
+      
+      <Routes>
+        <Route 
+          path="/" 
+          element={<Signin setLocation={setLocation} />} 
+        />
+        <Route 
+          path="/signin" 
+          element={<Signin setLocation={setLocation} />} 
+        />
+        {/* Catch-all route */}
+        <Route 
+          path="*" 
+          element={<Signin setLocation={setLocation} />} 
+        />
+      </Routes>
+    </Router>
   );
 }
 
