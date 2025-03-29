@@ -126,6 +126,56 @@
     transform: translateY(0);
   }
 
+/* Google OAuth button */
+
+.google-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  border: 2px solid #4285f4;
+  border-radius: 8px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  margin:auto;
+  font-weight: bold;
+  color: #4285f4;
+  transition: all 0.3s ease-in-out;
+  width: 250px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.google-btn:hover {
+  background-color: #4285f4;
+  color: white;
+}
+
+.google-icon-wrapper {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+}
+
+.google-icon {
+  width: 100%;
+  height: auto;
+}
+
+.btn-text {
+  margin: 0;
+  font-size: 16px;
+}
+
+.siggnedInMessage{
+  padding-top: 10px;
+  margin: auto;
+}
+
+
 /* Password error message */
   
   .password-error{
