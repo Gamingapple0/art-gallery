@@ -1,6 +1,8 @@
 const ArtType = (props)=>{
     return(
-        <p>{props.artType.name} {" ("}{props.artType.creationMethod}{" from "}{props.artType.region}{")"}</p>
+        <>
+        {props.details ? <p>{props.details.name} {" ("}{props.details.creationMethod}{" from "}{props.details.region}{")"}</p> : ""}
+        </>
     )
 }
 

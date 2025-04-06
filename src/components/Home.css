@@ -1,0 +1,24 @@
+button.back-button{
+    margin: 20px;
+    position: absolute;
+    z-index: 10;
+    font-weight: bold;
+}
+
+button.back-button :hover{
+    cursor: pointer;
+}
+
+.art-fact {
+    transition: opacity 0.5s ease-in-out;
+    opacity: 1;
+  }
+  
+  .art-fact.fade-out {
+    opacity: 0;
+  }
+  
+  .art-fact.fade-in {
+    opacity: 1;
+  }
+  
