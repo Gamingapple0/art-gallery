@@ -48,7 +48,7 @@
     }
   input:focus{
       border-bottom: 2px solid transparent;
-      border-image: linear-gradient(0deg, rgb(1, 159, 199) 0%, rgb(8, 174, 196) 100%);
+      border-image: #511C12;
       border-image-slice: 1;
       outline: none;
   }
@@ -58,8 +58,8 @@
       color:#fff;
       height: 50px;
       border-radius: 10px;
-      background: rgb(73,172,186);
-      border-image: linear-gradient(0deg, rgb(1, 159, 199) 0%, rgb(8, 174, 196) 100%);
+      background: #511C12;
+      border-image: #511C12;
       border: 0;
   }
   

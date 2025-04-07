@@ -21,11 +21,12 @@ export default function ArtFact(props) {
 
   return (
     <>
-        <div class="fact-container">
+    {props.details ? <div class="fact-container">
         <h1 className="text-xl font-bold">Art Fact!</h1>
-        <div className='fact-title'>{props.factTitle}</div>
-        <div className='fact-body'>{props.factBody}</div>
-        </div>
+        <div className='fact-title'>{props.details.factTitle}</div>
+        <div className='fact-body'>{props.details.factBody}</div>
+        </div> : ""
+    }
     </>
   );
 }

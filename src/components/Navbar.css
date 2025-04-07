@@ -81,7 +81,7 @@
   
   .navbar-items> a:before {
     content: '';
-    background: rgb(8, 174, 196);
+    background: rgb(65, 19, 7);
     display: block;
     position: absolute;
     bottom: -2px;
@@ -106,7 +106,7 @@
   width: 100%;
   position: relative;
   border-bottom: 2px solid transparent;
-  border-image: linear-gradient(0deg, rgb(1, 159, 199) 0%, rgb(8, 174, 196) 100%);
+  border-image: linear-gradient(0deg, rgb(65, 19, 7) 0%, rgb(65, 19, 7) 100%);
   border-image-slice: 1;
   outline: none;
 }

@@ -1,5 +1,5 @@
 import './Navbar.css';
-// import logo from '../images/bat-project-logo.png';
+import logo from '../images/logo.png';
 import { React, useEffect, useState } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import { auth } from '../config/firebase';
@@ -84,7 +84,7 @@ function Navbar(props) {
         <div className="nav-header">
           <div className="nav-title">
             <NavLink to="/">
-              <img className="logo" alt="Logo" />
+              <img src={logo} className="logo" alt="Logo" />
             </NavLink>
           </div>
         </div>
@@ -97,8 +97,9 @@ function Navbar(props) {
         </div>
 
         <div className="nav-links navbar-items">
-          {signnedIn && <NavLink to={`/products`}>Home</NavLink>}
-          {signnedIn && <NavLink onClick={handleSignOut}>Sign-Out</NavLink>}
+          <NavLink to={`/artifacts`}>Home</NavLink>
+          <NavLink to={`/artists`}>Artists</NavLink>
+          <NavLink onClick={handleSignOut}>Sign-Out</NavLink>
           {!signnedIn && <NavLink to="/signin">Sign-In</NavLink>}
         </div>
       </div>

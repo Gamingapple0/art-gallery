@@ -4,6 +4,7 @@ import React from 'react';
 
 import Navbar from './components/Navbar';
 import Signin from './components/Signin';
+import Home from './components/Home';
 
 import { auth } from './config/firebase';
 
@@ -13,6 +14,7 @@ import {
   Route,
   useLocation
 } from 'react-router-dom';
+import Artists from './components/Artists';
 
 function App() {
   const [location, setLocation] = React.useState('');
@@ -25,7 +27,15 @@ function App() {
       <Routes>
         <Route 
           path="/" 
-          element={<Signin setLocation={setLocation} />} 
+          element={<Home setLocation={setLocation} />} 
+        />
+        <Route 
+          path="/artifacts" 
+          element={<Home setLocation={setLocation} />} 
+        />
+        <Route 
+          path="/artists" 
+          element={<Artists setLocation={setLocation} />} 
         />
         <Route 
           path="/signin" 
