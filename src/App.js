@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import React from 'react';
+import React, { createContext } from 'react';
 
 import Navbar from './components/Navbar';
 import Signin from './components/Signin';
@@ -15,11 +15,14 @@ import {
   useLocation
 } from 'react-router-dom';
 import Artists from './components/Artists';
+export const UserContext = React.createContext();
 
 function App() {
   const [location, setLocation] = React.useState('');
+  const [user, setUser] = React.useState("");
 
   return (
+    <UserContext.Provider value={{ user, setUser }}>
     <Router>
       {/* Render Navbar only if the current path isn't '/' */}
       {location !== '/' && <Navbar />}
@@ -48,6 +51,7 @@ function App() {
         />
       </Routes>
     </Router>
+    </UserContext.Provider>
   );
 }
 

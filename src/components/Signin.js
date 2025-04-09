@@ -5,14 +5,15 @@ import { auth } from "../config/firebase";
 import { useNavigate } from "react-router";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import googlelogo from "../images/google_logo.png";
+import { UserContext } from "../App";
 
 // Create a Google Authentication Provider
 const provider = new GoogleAuthProvider();
 
 function Signin(props) {
-  const [user, setUser] = React.useState("");
   const [signnedIn, setSignnedIn] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState(null);
+  const { user, setUser } = React.useContext(UserContext);
 
   const navigate = useNavigate();
 

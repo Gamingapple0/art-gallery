@@ -1,12 +1,14 @@
 import './Navbar.css';
 import logo from '../images/logo.png';
-import { React, useEffect, useState } from 'react';
+import { React, useContext, useEffect, useState } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import { auth } from '../config/firebase';
 import { signOut } from 'firebase/auth';
+import { UserContext } from '../App';
 
 function Navbar(props) {
-  const [signnedIn, setSignnedIn] = useState(null);
+  const [signnedIn, setSignnedIn] = useState(false);
+  const {user, setUser} = useContext(UserContext)
   console.log(auth)
   const handleSignOut = async () => {
     try {
@@ -18,19 +20,8 @@ function Navbar(props) {
     }
   };
 
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        setSignnedIn(user);
-      } else {
-        setSignnedIn(null);
-      }
-    });
 
-    return () => {
-      unsubscribe();
-    };
-  }, []);
+  useEffect(()=>{      console.log(signnedIn);  },[])
 
   var signed = signnedIn ? 'Sign-Out' : 'Sign-In';
 
@@ -98,9 +89,8 @@ function Navbar(props) {
 
         <div className="nav-links navbar-items">
           <NavLink to={`/artifacts`}>Home</NavLink>
-          <NavLink to={`/artists`}>Artists</NavLink>
-          <NavLink onClick={handleSignOut}>Sign-Out</NavLink>
-          {!signnedIn && <NavLink to="/signin">Sign-In</NavLink>}
+          {user && <NavLink onClick={handleSignOut}>Sign-Out</NavLink>}
+          {!user && <NavLink to="/signin">Sign-In</NavLink>}
         </div>
       </div>
       <main>
