@@ -16,7 +16,7 @@ function Details(productDetailItem){
     const [highestBid, setHighestBid] = useState(productDetailItem.artifact.price);
     const [currentBid, setCurrentBid] = useState(0);
     const {user, setUser} = React.useContext(UserContext);
-    const [notLoggedInMessage, setNotLoggedInMessage] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
 
     useEffect(() => {
       if(productDetailItem.artifact.bids.length > 0){
@@ -39,7 +39,8 @@ function Details(productDetailItem){
               "originalPrice":highestBid,
               "newBidder":user.email
         }; 
-        if (currentBid > highestBid && currentBid >= productDetailItem.artifact.price&& user) {
+        console.log(new Date(productDetailItem.artifact.endDate).toLocaleDateString('en-ZA') >= new Date().toLocaleDateString('en-ZA'))
+        if (currentBid > highestBid && currentBid >= productDetailItem.artifact.price&& user && new Date(productDetailItem.artifact.endDate).toLocaleDateString('en-ZA') >= new Date().toLocaleDateString('en-ZA')) {
           fetch('http://localhost:8081/api/artifacts/' + productDetailItem.artifact.id + '/bid', {
             method: 'POST',
             headers: {
@@ -53,13 +54,25 @@ function Details(productDetailItem){
           })
           }
         )
-        setNotLoggedInMessage("");
+        setErrorMessage("");
         window.location.reload();
       }
-      else{
-        currentBid > highestBid && currentBid >= productDetailItem.artifact.price ? setNotLoggedInMessage("You need to be logged in to bid") : setNotLoggedInMessage("Bid must be higher than original price and highest previous bid")
+      else if(new Date(productDetailItem.artifact.endDate).toLocaleDateString('en-ZA') <= new Date().toLocaleDateString('en-ZA')){
+        setErrorMessage("Bidding time has expired, no further bids can be added")
         setTimeout(()=>{
-          setNotLoggedInMessage("");
+          setErrorMessage("")
+        },2000)
+      }
+      else if(user.email == null || user.email == ""){
+        setErrorMessage("You need to be logged in to bid bro")
+        setTimeout(()=>{
+          setErrorMessage("")
+        },2000)
+      }
+      else{
+        currentBid > highestBid && currentBid >= productDetailItem.artifact.price ? setErrorMessage("Unexpected Error Occured") : setErrorMessage("Bid must be higher than original price and highest previous bid")
+        setTimeout(()=>{
+          setErrorMessage("");
         }, 2000)
       }
       }
@@ -113,6 +126,7 @@ function Details(productDetailItem){
             <b>Artist: </b>
             {productDetailItem.artifact.artist.firstName} {productDetailItem.artifact.artist.lastName}
             </p>
+            <p><b>Bidding End date:</b> {productDetailItem.artifact.endDate}</p>
           <p>{productDetailItem.artifact.artist.email}</p>
           {productDetailItem.artifact.artTypes.length > 0 && <ul className="art-types mx-auto px-5 lg:px-5">
             {productDetailItem.artifact.artTypes.map((artType) => <li><ArtType details={artType} /></li>)}
@@ -150,7 +164,7 @@ function Details(productDetailItem){
               />
             </div>
           </div>
-          <div className="mt-4 text-red-600">{notLoggedInMessage}</div>
+          <div className="mt-4 text-red-600">{errorMessage}</div>
 
         </div>
       </section>
