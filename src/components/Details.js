@@ -57,7 +57,7 @@ function Details(productDetailItem){
         setErrorMessage("");
         window.location.reload();
       }
-      else if(new Date(productDetailItem.artifact.endDate).toLocaleDateString('en-ZA') <= new Date().toLocaleDateString('en-ZA')){
+      else if(new Date(productDetailItem.artifact.endDate).toLocaleDateString('en-ZA') < new Date().toLocaleDateString('en-ZA')){
         setErrorMessage("Bidding time has expired, no further bids can be added")
         setTimeout(()=>{
           setErrorMessage("")
