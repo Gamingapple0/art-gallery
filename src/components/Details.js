@@ -7,6 +7,7 @@ import ArtType from "./ArtType";
 import Bids from "./Bids";
 import { UserContext } from "../App";
 import axios from 'axios';
+import { getAuth } from "firebase/auth";
 
 function Details(productDetailItem){
     const plusMinuceButton ="flex h-8 w-8 cursor-pointer items-center justify-center border duration-100 hover:bg-neutral-100 focus:ring-2 focus:ring-gray-500 active:ring-2 active:ring-gray-500";
@@ -41,21 +42,26 @@ function Details(productDetailItem){
         }; 
         console.log(new Date(productDetailItem.artifact.endDate).toLocaleDateString('en-ZA') >= new Date().toLocaleDateString('en-ZA'))
         if (currentBid > highestBid && currentBid >= productDetailItem.artifact.price&& user && new Date(productDetailItem.artifact.endDate).toLocaleDateString('en-ZA') >= new Date().toLocaleDateString('en-ZA')) {
-          fetch('http://localhost:8081/api/artifacts/' + productDetailItem.artifact.id + '/bid', {
-            method: 'POST',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              "newBid":currentBid,
-              "originalPrice":highestBid,
-              "newBidder":user.email
-          })
+          const auth = getAuth();
+          const user = auth.currentUser;{
+          const idToken = await user.getIdToken();
+        
+            fetch('http://localhost:8081/api/artifacts/' + productDetailItem.artifact.id + '/bid', {
+              method: 'POST',
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${idToken}`,  // <-- Send token here
+              },
+              body: JSON.stringify({
+                "newBid": currentBid,
+                "originalPrice": highestBid,
+                "newBidder": user.email
+              })
+            });
           }
-        )
         setErrorMessage("");
-        window.location.reload();
+        // window.location.reload();
       }
       else if(new Date(productDetailItem.artifact.endDate).toLocaleDateString('en-ZA') < new Date().toLocaleDateString('en-ZA')){
         setErrorMessage("Bidding time has expired, no further bids can be added")
